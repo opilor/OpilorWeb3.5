@@ -1,0 +1,540 @@
+<!DOCTYPE html>
+<html lang="en" class="">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Opilor App - MVP Landing Page</title>
+    
+    <!-- Google Tag Manager -->
+    <script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
+    new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
+    j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
+    'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
+    })(window,document,'script','dataLayer','GTM-59MXJJL6');</script>
+    <!-- End Google Tag Manager -->
+
+    <!-- Favicon Links Start -->
+    <link rel="apple-touch-icon" sizes="180x180" href="./assets/apple-touch-icon.png">
+    <link rel="icon" type="image/png" sizes="32x32" href="./assets/favicon-32x32.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="./assets/favicon-16x16.png">
+    <link rel="manifest" href="./assets/site.webmanifest">
+    <link rel="shortcut icon" href="./assets/favicon.ico">
+    <!-- Favicon Links End -->
+
+    <script>
+      // On page load or when changing themes, best to add inline in `head` to avoid FOUC
+      if (localStorage.getItem('color-theme') === 'dark' || (!('color-theme' in localStorage) && window.matchMedia('(prefers-color-scheme: dark)').matches)) {
+          document.documentElement.classList.add('dark');
+      } else {
+          document.documentElement.classList.remove('dark');
+      }
+    </script>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+      tailwind.config = {
+        darkMode: 'class',
+        theme: {
+          extend: {
+            colors: {
+              'opilor-green': '#6CC74C',
+            }
+          }
+        }
+      }
+    </script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Poppins:wght@600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" integrity="sha512-DTOQO9RWCH3ppGqcWaEA1BIZOC6xxalwEsw9c2QQeAIftl+Vegovlnee1c9QX4TctnWMn13TZye+giMm8e2LwA==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <link rel="stylesheet" href="https://unpkg.com/swiper/swiper-bundle.min.css" />
+    <style>
+      html {
+        scroll-behavior: smooth;
+      }
+      body {
+        font-family: 'Inter', sans-serif;
+        color: #333333;
+        background-color: #f4f4f4;
+        transition: background-color 0.3s ease-in-out, color 0.3s ease-in-out;
+      }
+      .dark body {
+        background-color: #0f172a; /* slate-900 */
+        color: #cbd5e1; /* slate-300 */
+      }
+      h1, h2, h3, .logo-font {
+        font-family: 'Poppins', sans-serif;
+      }
+      .shadow-light { box-shadow: 0 4px 6px -1px rgb(0 0 0 / 0.05), 0 2px 4px -2px rgb(0 0 0 / 0.05); }
+      .transition-smooth { transition: all 0.3s ease-in-out; }
+
+      /* Swiper Carousel Styles */
+      .swiper {
+        width: 100%;
+        padding-top: 20px;
+        padding-bottom: 40px;
+      }
+      .swiper-slide {
+        background-color: transparent;
+        width: 240px;
+        height: 480px; /* Set a fixed height for mobile */
+      }
+      @media (min-width: 768px) {
+        .swiper-slide {
+            width: 300px;
+            height: 600px; /* Adjust height for larger screens */
+        }
+      }
+      .swiper-slide img {
+        display: block;
+        width: 100%;
+        height: 100%;
+        object-fit: contain;
+      }
+      .swiper-pagination-bullet-active {
+        background-color: #6CC74C !important;
+      }
+
+      /* Mobile Menu Sidebar Styles */
+      #mobile-menu {
+        transform: translateX(100%);
+        transition: transform 0.3s ease-in-out;
+      }
+      #mobile-menu.open {
+        transform: translateX(0);
+      }
+      #menu-overlay {
+        background-color: rgba(0,0,0,0.5);
+        opacity: 0;
+        transition: opacity 0.3s ease-in-out;
+        pointer-events: none;
+      }
+      #menu-overlay.open {
+        opacity: 1;
+        pointer-events: auto;
+      }
+    </style>
+  <link rel="stylesheet" href="/index.css">
+</head>
+  <body>
+    <!-- Google Tag Manager (noscript) -->
+    <noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-59MXJJL6"
+    height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
+    <!-- End Google Tag Manager (noscript) -->
+    <div id="menu-overlay" class="md:hidden fixed inset-0 z-[99]"></div>
+    <div id="mobile-menu" class="md:hidden bg-white dark:bg-slate-800 h-full w-[280px] fixed top-0 right-0 z-[100] shadow-lg p-8">
+      <nav class="flex flex-col items-start space-y-6 h-full">
+        <a href="#" class="text-3xl font-bold text-opilor-green logo-font mb-8">Opilor</a>
+        <a href="#flow" class="text-lg text-[#333333] dark:text-slate-300 hover:text-opilor-green dark:hover:text-opilor-green font-medium transition-smooth">How It Works</a>
+        <a href="https://script.google.com/macros/s/AKfycbyfTcNdEQN41TTiL87NiBimHSQIbxcy6XcJffARQpRQwr3Zm69kDyf1f4rQH3jczlvr/exec" target="_blank" rel="noopener noreferrer" class="text-lg text-[#333333] dark:text-slate-300 hover:text-opilor-green dark:hover:text-opilor-green font-medium transition-smooth">Requester Panel</a>
+        <a href="https://script.google.com/macros/s/AKfycbxZ5k_Lxj4M8Ws36xGa3Ai18mDp-U-WX5IAv13FtJiQVDjtd0funWOnIc7T0t2drG9yNg/exec" target="_blank" rel="noopener noreferrer" class="text-lg text-[#333333] dark:text-slate-300 hover:text-opilor-green dark:hover:text-opilor-green font-medium transition-smooth">Helper Panel</a>
+        <div class="mt-auto w-full flex flex-col items-start gap-6">
+          <button id="mobile-theme-toggle" class="text-gray-500 dark:text-gray-400 hover:bg-gray-100 dark:hover:bg-gray-700 focus:outline-none rounded-lg text-sm p-2.5">
+            <i id="mobile-theme-toggle-icon-light" class="fas fa-moon text-xl"></i>
+            <i id="mobile-theme-toggle-icon-dark" class="fas fa-sun text-xl hidden"></i>
+          </button>
+          <a href="https://t.me/+DjWPEqlOAzxmM2Vk" target="_blank" rel="noopener noreferrer" class="join-beta-btn block w-full text-center bg-opilor-green text-white font-semibold py-3 px-6 rounded-lg hover:opacity-90 transition-smooth shadow-sm">
+            Join the Beta
+          </a>
+        </div>
+      </nav>
+    </div>
+
+    <header id="header" class="bg-white dark:bg-slate-900/80 dark:border-b dark:border-slate-800 backdrop-blur-sm sticky top-0 z-50 shadow-light">
+      <div class="container mx-auto px-6 py-4 flex justify-between items-center">
+        <a href="#" class="text-3xl font-bold text-opilor-green logo-font">
+          Opilor
+        </a>
+        <nav class="hidden md:flex items-center space-x-8">
+          <a href="#flow" class="text-[#333333] dark:text-slate-300 hover:text-opilor-green dark:hover:text-opilor-green font-medium transition-smooth">How It Works</a>
+          <a href="https://script.google.com/macros/s/AKfycbyfTcNdEQN41TTiL87NiBimHSQIbxcy6XcJffARQpRQwr3Zm69kDyf1f4rQH3jczlvr/exec" target="_blank" rel="noopener noreferrer" class="text-[#333333] dark:text-slate-300 hover:text-opilor-green dark:hover:text-opilor-green font-medium transition-smooth">Requester Panel</a>
+          <a href="https://script.google.com/macros/s/AKfycbxZ5k_Lxj4M8Ws36xGa3Ai18mDp-U-WX5IAv13FtJiQVDjtd0funWOnIc7T0t2drG9yNg/exec" target="_blank" rel="noopener noreferrer" class="text-[#333333] dark:text-slate-300 hover:text-opilor-green dark:hover:text-opilor-green font-medium transition-smooth">Helper Panel</a>
+          <a href="https://t.me/+DjWPEqlOAzxmM2Vk" target="_blank" rel="noopener noreferrer" class="join-beta-btn bg-opilor-green text-white font-semibold py-2 px-6 rounded-lg hover:opacity-90 transition-smooth shadow-sm">
+            Join the Beta
+          </a>
+          <button id="theme-toggle" class="text-gray-500 dark:text-gray-400 hover:bg-gray-100 dark:hover:bg-gray-700 focus:outline-none rounded-lg text-sm p-2.5">
+            <i id="theme-toggle-icon-light" class="fas fa-moon text-lg"></i>
+            <i id="theme-toggle-icon-dark" class="fas fa-sun text-lg hidden"></i>
+          </button>
+        </nav>
+        <div class="md:hidden">
+          <button id="menu-btn" class="text-[#333333] dark:text-slate-300 focus:outline-none">
+            <i id="menu-icon" class="fas fa-bars text-2xl"></i>
+          </button>
+        </div>
+      </div>
+    </header>
+
+    <main>
+      <section id="hero" class="bg-white dark:bg-slate-900 py-20 md:py-24">
+        <div class="container mx-auto px-6 text-center">
+          <h1 class="text-4xl md:text-6xl font-bold text-[#333333] dark:text-white leading-tight mb-4">
+            Help and get helped,<br> anytime, anywhere.
+          </h1>
+          <p class="text-lg md:text-xl text-gray-600 dark:text-gray-400 mb-8">
+            Our full version of the app is currently in development, start using our Pilot MVP！
+          </p>
+          <a id="how-to-start-btn" href="#flow" class="bg-opilor-green text-white font-bold py-4 px-10 rounded-lg text-lg hover:opacity-90 transition-smooth shadow-md">
+            How to start
+          </a>
+          <div class="mt-12 md:mt-16 w-full">
+            <!-- Swiper Carousel -->
+            <div class="swiper mySwiper">
+              <div class="swiper-wrapper">
+                <div class="swiper-slide">
+                  <img src="./assets/mockup-1.png" alt="App Home Feed Mockup" />
+                </div>
+                <div class="swiper-slide">
+                  <img src="./assets/mockup-2.png" alt="App Task Details Mockup" />
+                </div>
+                <div class="swiper-slide">
+                  <img src="./assets/mockup-3.png" alt="App Accept Task Mockup" />
+                </div>
+                <div class="swiper-slide">
+                  <img src="./assets/mockup-4.png" alt="App User Profile Mockup" />
+                </div>
+                 <div class="swiper-slide">
+                  <img src="./assets/mockup-5.png" alt="App In-app Chat Mockup" />
+                </div>
+                <div class="swiper-slide">
+                  <img src="./assets/mockup-6.png" alt="App Another Screen Mockup" />
+                </div>
+                <!-- Duplicated slides for seamless loop -->
+                <div class="swiper-slide">
+                  <img src="./assets/mockup-1.png" alt="App Home Feed Mockup" />
+                </div>
+                <div class="swiper-slide">
+                  <img src="./assets/mockup-2.png" alt="App Task Details Mockup" />
+                </div>
+                <div class="swiper-slide">
+                  <img src="./assets/mockup-3.png" alt="App Accept Task Mockup" />
+                </div>
+                <div class="swiper-slide">
+                  <img src="./assets/mockup-4.png" alt="App User Profile Mockup" />
+                </div>
+                 <div class="swiper-slide">
+                  <img src="./assets/mockup-5.png" alt="App In-app Chat Mockup" />
+                </div>
+                <div class="swiper-slide">
+                  <img src="./assets/mockup-6.png" alt="App Another Screen Mockup" />
+                </div>
+              </div>
+              <div class="swiper-pagination"></div>
+            </div>
+            <p class="text-sm text-gray-500 dark:text-gray-400 mt-4 italic">Our future App preview</p>
+          </div>
+        </div>
+      </section>
+
+      <section id="flow" class="py-20 md:py-28 bg-[#f4f4f4] dark:bg-slate-900">
+        <div class="container mx-auto px-6">
+          <div class="text-center mb-16">
+            <h2 class="text-3xl md:text-4xl font-bold text-[#333333] dark:text-white">
+              How It Works
+            </h2>
+            <p class="text-lg text-gray-600 dark:text-gray-400 mt-2">Get things done in three simple steps.</p>
+          </div>
+          <div class="grid grid-cols-1 md:grid-cols-3 gap-10 md:gap-8 pt-8 max-w-4xl mx-auto">
+            <div class="bg-white dark:bg-slate-800 p-8 rounded-xl shadow-light dark:shadow-none dark:border dark:border-slate-700 text-center flex flex-col items-center transition-transform transform hover:-translate-y-2">
+              <div class="w-16 h-16 bg-opilor-green text-white rounded-full flex items-center justify-center text-3xl font-bold mb-6">1</div>
+              <i class="fab fa-telegram-plane text-4xl text-opilor-green"></i>
+              <h3 class="text-xl font-bold mt-4 mb-2 dark:text-white">Join our group</h3>
+              <p class="text-gray-600 dark:text-gray-400">Check and review <br> all task posted.</p>
+              <a href="https://t.me/+DjWPEqlOAzxmM2Vk" target="_blank" rel="noopener noreferrer" class="mt-6 bg-opilor-green text-white font-semibold py-2 px-6 rounded-lg hover:opacity-90 transition-smooth shadow-sm">
+                Join the group
+              </a>
+            </div>
+            <div class="bg-white dark:bg-slate-800 p-8 rounded-xl shadow-light dark:shadow-none dark:border dark:border-slate-700 text-center flex flex-col items-center transition-transform transform hover:-translate-y-2">
+              <div class="w-16 h-16 bg-opilor-green text-white rounded-full flex items-center justify-center text-3xl font-bold mb-6">2</div>
+              <i class="fas fa-file-alt text-4xl text-opilor-green"></i>
+              <h3 class="text-xl font-bold mt-4 mb-2 dark:text-white">Post your task</h3>
+              <p class="text-gray-600 dark:text-gray-400">Describe what you <br> need help with.</p>
+              <a href="https://script.google.com/macros/s/AKfycbyfTcNdEQN41TTiL87NiBimHSQIbxcy6XcJffARQpRQwr3Zm69kDyf1f4rQH3jczlvr/exec" target="_blank" rel="noopener noreferrer" class="mt-6 bg-opilor-green text-white font-semibold py-2 px-6 rounded-lg hover:opacity-90 transition-smooth shadow-sm">
+                Requester Panel
+              </a>
+            </div>
+            <div class="bg-white dark:bg-slate-800 p-8 rounded-xl shadow-light dark:shadow-none dark:border dark:border-slate-700 text-center flex flex-col items-center transition-transform transform hover:-translate-y-2">
+              <div class="w-16 h-16 bg-opilor-green text-white rounded-full flex items-center justify-center text-3xl font-bold mb-6">3</div>
+              <i class="fas fa-comments text-4xl text-opilor-green"></i>
+              <h3 class="text-xl font-bold mt-4 mb-2 dark:text-white">Contact & Complete</h3>
+              <p class="text-gray-600 dark:text-gray-400">Check task availability, get the contact and earn fees.</p>
+              <a href="https://script.google.com/macros/s/AKfycbxZ5k_Lxj4M8Ws36xGa3Ai18mDp-U-WX5IAv13FtJiQVDjtd0funWOnIc7T0t2drG9yNg/exec" target="_blank" rel="noopener noreferrer" class="mt-6 bg-opilor-green text-white font-semibold py-2 px-6 rounded-lg hover:opacity-90 transition-smooth shadow-sm">
+                Helper Panel
+              </a>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section id="helper" class="bg-white dark:bg-slate-800 py-20 md:py-28">
+        <div class="container mx-auto px-6 flex flex-col lg:flex-row items-center justify-between gap-12">
+          <div class="lg:w-1/2 text-center lg:text-left">
+            <h2 class="text-3xl md:text-4xl font-bold text-[#333333] dark:text-white mb-4">
+              Earn fees anytime, anywhere.
+            </h2>
+            <p class="text-lg text-gray-600 dark:text-gray-400 mb-8">
+              Become an Opilor Helper. Use your spare time to help others and get paid. Flexible, simple, and rewarding.
+            </p>
+            <a href="https://t.me/+DjWPEqlOAzxmM2Vk" target="_blank" rel="noopener noreferrer" class="bg-opilor-green text-white font-bold py-3 px-8 rounded-lg text-lg hover:opacity-90 transition-smooth shadow-md">
+              Become a Helper
+            </a>
+          </div>
+          <div class="lg:w-1/2 flex justify-center">
+            <div class="bg-white dark:bg-slate-800 rounded-2xl p-6 shadow-xl dark:shadow-none w-full max-w-sm border border-gray-100 dark:border-slate-700 transform transition-transform hover:scale-105">
+              <div class="flex justify-between items-start mb-4">
+                <div>
+                  <span class="bg-green-100 text-opilor-green text-sm font-semibold px-3 py-1 rounded-full">Moving</span>
+                </div>
+                <div class="text-3xl font-bold text-opilor-green">15 <span class="text-xl">$</span></div>
+              </div>
+              <p class="text-gray-500 dark:text-gray-400 mb-6">A quick task to move some boxes from the garage to the attic.</p>
+              <div class="bg-gray-50 dark:bg-slate-700 p-4 rounded-lg mb-6">
+                <p class="text-sm text-gray-500 dark:text-gray-400 mb-1">Requester:</p>
+                <div class="flex items-center">
+                  <img src="https://picsum.photos/40/40" alt="Maria" class="w-10 h-10 rounded-full mr-3" />
+                  <div>
+                    <p class="font-semibold text-[#333333] dark:text-white">Maria</p>
+                    <div class="flex items-center text-sm text-yellow-500">
+                      <i class="fas fa-star mr-1"></i>
+                      <span>4.9 good requester</span>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <button class="w-full bg-opilor-green text-white font-bold py-3 rounded-lg hover:opacity-90 transition-smooth shadow-md">
+                Accept the task
+              </button>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section id="trust" class="py-20 md:py-28 bg-[#f4f4f4] dark:bg-slate-900">
+        <div class="container mx-auto px-6">
+          <div class="text-center mb-16">
+            <h2 class="text-3xl md:text-4xl font-bold text-[#333333] dark:text-white">
+              Trust & Safety
+            </h2>
+            <p class="text-lg text-gray-600 dark:text-gray-400 mt-2">Our future in-app safety & Trust features.</p>
+          </div>
+          <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+            <div class="bg-white dark:bg-slate-800 p-8 rounded-xl shadow-light dark:shadow-none dark:border dark:border-slate-700 text-left transition-transform transform hover:-translate-y-2">
+              <div class="bg-opilor-green text-white w-12 h-12 rounded-lg flex items-center justify-center mb-4">
+                <i class="fas fa-star-half-alt text-xl"></i>
+              </div>
+              <h3 class="text-xl font-bold mb-2 dark:text-white">Helper Rating System</h3>
+              <p class="text-gray-600 dark:text-gray-400">Transparent ratings help you choose the best helper for your task.</p>
+            </div>
+            <div class="bg-white dark:bg-slate-800 p-8 rounded-xl shadow-light dark:shadow-none dark:border dark:border-slate-700 text-left transition-transform transform hover:-translate-y-2">
+              <div class="bg-opilor-green text-white w-12 h-12 rounded-lg flex items-center justify-center mb-4">
+                <i class="fas fa-shield-alt text-xl"></i>
+              </div>
+              <h3 class="text-xl font-bold mb-2 dark:text-white">Confirm Completion</h3>
+              <p class="text-gray-600 dark:text-gray-400">Fees are only released after you confirm the task is completed to your satisfaction.</p>
+            </div>
+            <div class="bg-white dark:bg-slate-800 p-8 rounded-xl shadow-light dark:shadow-none dark:border dark:border-slate-700 text-left transition-transform transform hover:-translate-y-2">
+              <div class="bg-opilor-green text-white w-12 h-12 rounded-lg flex items-center justify-center mb-4">
+                <i class="fas fa-comments text-xl"></i>
+              </div>
+              <h3 class="text-xl font-bold mb-2 dark:text-white">Message from Helper</h3>
+              <p class="text-gray-600 dark:text-gray-400">Communicate securely with your helper through our in-app messaging system.</p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section id="services" class="bg-white dark:bg-slate-800 py-20 md:py-28">
+        <div class="container mx-auto px-6">
+          <div class="text-center mb-16">
+            <h2 class="text-3xl md:text-4xl font-bold text-[#333333] dark:text-white">
+              Services
+            </h2>
+            <p class="text-lg text-gray-600 dark:text-gray-400 mt-2">Find help for almost any task.</p>
+          </div>
+          <div class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
+            <div class="bg-white dark:bg-slate-800 rounded-lg p-6 flex items-center space-x-4 shadow-light dark:shadow-none dark:border dark:border-slate-700 transition-transform transform hover:scale-105">
+              <i class="fas fa-exchange-alt text-2xl text-opilor-green w-8 text-center"></i>
+              <span class="font-semibold text-[#333333] dark:text-white">Borrow / Share</span>
+            </div>
+            <div class="bg-white dark:bg-slate-800 rounded-lg p-6 flex items-center space-x-4 shadow-light dark:shadow-none dark:border dark:border-slate-700 transition-transform transform hover:scale-105">
+              <i class="fas fa-running text-2xl text-opilor-green w-8 text-center"></i>
+              <span class="font-semibold text-[#333333] dark:text-white">Quick Errands</span>
+            </div>
+            <div class="bg-white dark:bg-slate-800 rounded-lg p-6 flex items-center space-x-4 shadow-light dark:shadow-none dark:border dark:border-slate-700 transition-transform transform hover:scale-105">
+              <i class="fas fa-box text-2xl text-opilor-green w-8 text-center"></i>
+              <span class="font-semibold text-[#333333] dark:text-white">Pickup & Delivery</span>
+            </div>
+            <div class="bg-white dark:bg-slate-800 rounded-lg p-6 flex items-center space-x-4 shadow-light dark:shadow-none dark:border dark:border-slate-700 transition-transform transform hover:scale-105">
+              <i class="fas fa-users text-2xl text-opilor-green w-8 text-center"></i>
+              <span class="font-semibold text-[#333333] dark:text-white">Event Support</span>
+            </div>
+            <div class="bg-white dark:bg-slate-800 rounded-lg p-6 flex items-center space-x-4 shadow-light dark:shadow-none dark:border dark:border-slate-700 transition-transform transform hover:scale-105">
+              <i class="fas fa-graduation-cap text-2xl text-opilor-green w-8 text-center"></i>
+              <span class="font-semibold text-[#333333] dark:text-white">Academic Help</span>
+            </div>
+            <div class="bg-white dark:bg-slate-800 rounded-lg p-6 flex items-center space-x-4 shadow-light dark:shadow-none dark:border dark:border-slate-700 transition-transform transform hover:scale-105">
+              <i class="fas fa-map-signs text-2xl text-opilor-green w-8 text-center"></i>
+              <span class="font-semibold text-[#333333] dark:text-white">Local Tips</span>
+            </div>
+            <div class="bg-white dark:bg-slate-800 rounded-lg p-6 flex items-center space-x-4 shadow-light dark:shadow-none dark:border dark:border-slate-700 transition-transform transform hover:scale-105">
+              <i class="fas fa-shopping-bag text-2xl text-opilor-green w-8 text-center"></i>
+              <span class="font-semibold text-[#333333] dark:text-white">Buy & Bring</span>
+            </div>
+            <div class="bg-white dark:bg-slate-800 rounded-lg p-6 flex items-center space-x-4 shadow-light dark:shadow-none dark:border dark:border-slate-700 transition-transform transform hover:scale-105">
+              <i class="fas fa-ellipsis-h text-2xl text-opilor-green w-8 text-center"></i>
+              <span class="font-semibold text-[#333333] dark:text-white">Other</span>
+            </div>
+          </div>
+        </div>
+      </section>
+
+    </main>
+
+    <footer id="footer" class="bg-[#333333] dark:bg-slate-800 text-white pt-20 pb-10">
+      <div class="container mx-auto px-6">
+        <div class="grid grid-cols-1 md:grid-cols-5 gap-8 mb-10 text-center md:text-left">
+          <!-- About Column -->
+          <div class="md:col-span-1">
+            <h4 class="text-xl font-bold logo-font text-opilor-green mb-4">Opilor</h4>
+            <p class="text-gray-400 dark:text-gray-400">Connecting people who need help with those who can provide it, simply and securely.</p>
+          </div>
+          
+          <!-- Links Column -->
+          <div>
+            <h5 class="font-bold text-lg mb-4 text-white">Quick Links</h5>
+            <nav class="flex flex-col space-y-2">
+              <a href="#flow" class="text-gray-400 hover:text-white transition-smooth">How It Works</a>
+              <a href="#trust" class="text-gray-400 hover:text-white transition-smooth">Trust & Safety</a>
+            </nav>
+          </div>
+
+          <!-- Legal Column -->
+          <div>
+            <h5 class="font-bold text-lg mb-4 text-white">Legal</h5>
+            <nav class="flex flex-col space-y-2">
+              <a href="#" class="text-gray-400 hover:text-white transition-smooth">Privacy Policy</a>
+              <a href="#" class="text-gray-400 hover:text-white transition-smooth">Terms of Service</a>
+            </nav>
+          </div>
+          
+          <!-- Contact Us Column -->
+          <div>
+            <h5 class="font-bold text-lg mb-4 text-white">Contact us</h5>
+            <nav class="flex flex-col space-y-2">
+              <a href="mailto:contact@opilor.com" class="text-gray-400 hover:text-white transition-smooth">contact@opilor.com</a>
+            </nav>
+          </div>
+
+          <!-- Join Beta Column -->
+          <div>
+            <h5 class="font-bold text-lg mb-4 text-white">Join Us</h5>
+            <p class="text-gray-400 mb-4">Be the first to know when we launch.</p>
+            <a href="https://t.me/+DjWPEqlOAzxmM2Vk" target="_blank" rel="noopener noreferrer" class="bg-opilor-green text-white font-semibold py-2 px-6 rounded-lg hover:opacity-90 transition-smooth shadow-sm">
+              Join Pilot via telegram
+            </a>
+          </div>
+        </div>
+        
+        <div class="border-t border-gray-700 dark:border-gray-600 pt-8 mt-8 text-center">
+          <div class="flex justify-center space-x-6 mb-6">
+            <a href="https://www.linkedin.com/company/opilor/" target="_blank" rel="noopener noreferrer" class="text-2xl text-gray-400 hover:text-white transition-smooth"><i class="fab fa-linkedin"></i></a>
+            <a href="https://www.instagram.com/opilor_official/" target="_blank" rel="noopener noreferrer" class="text-2xl text-gray-400 hover:text-white transition-smooth"><i class="fab fa-instagram"></i></a>
+            <a href="https://t.me/+DjWPEqlOAzxmM2Vk" target="_blank" rel="noopener noreferrer" class="text-2xl text-gray-400 hover:text-white transition-smooth"><i class="fab fa-telegram"></i></a>
+          </div>
+          <p class="text-gray-500">
+            &copy; 2025 Opilor. All rights reserved.
+          </p>
+        </div>
+      </div>
+    </footer>
+
+    <script src="https://unpkg.com/swiper/swiper-bundle.min.js"></script>
+    <script>
+      // Mobile Menu Toggle
+      const menuBtn = document.getElementById('menu-btn');
+      const mobileMenu = document.getElementById('mobile-menu');
+      const menuIcon = document.getElementById('menu-icon');
+      const menuOverlay = document.getElementById('menu-overlay');
+
+      function openMenu() {
+        mobileMenu.classList.add('open');
+        menuOverlay.classList.add('open');
+        menuIcon.classList.replace('fa-bars', 'fa-times');
+        document.body.style.overflow = 'hidden';
+      }
+
+      function closeMenu() {
+        mobileMenu.classList.remove('open');
+        menuOverlay.classList.remove('open');
+        menuIcon.classList.replace('fa-times', 'fa-bars');
+        document.body.style.overflow = '';
+      }
+
+      menuBtn.addEventListener('click', () => {
+        if (mobileMenu.classList.contains('open')) {
+          closeMenu();
+        } else {
+          openMenu();
+        }
+      });
+
+      menuOverlay.addEventListener('click', closeMenu);
+
+      document.querySelectorAll('#mobile-menu a').forEach(link => {
+        // Close menu only for internal links
+        if (link.getAttribute('href').startsWith('#')) {
+          link.addEventListener('click', closeMenu);
+        }
+      });
+
+      // Swiper Carousel Initialization
+      var swiper = new Swiper(".mySwiper", {
+        grabCursor: true,
+        centeredSlides: true,
+        slidesPerView: "auto",
+        spaceBetween: 20,
+        loop: true,
+        pagination: {
+          el: ".swiper-pagination",
+          clickable: true,
+        },
+        autoplay: {
+          delay: 3000,
+          disableOnInteraction: false,
+        },
+      });
+      
+      // Dark Mode Toggle
+      const themeToggleBtns = document.querySelectorAll('#theme-toggle, #mobile-theme-toggle');
+      const lightIcons = document.querySelectorAll('#theme-toggle-icon-light, #mobile-theme-toggle-icon-light');
+      const darkIcons = document.querySelectorAll('#theme-toggle-icon-dark, #mobile-theme-toggle-icon-dark');
+
+      // Function to update icon state
+      function updateIcons(isDarkMode) {
+          lightIcons.forEach(icon => isDarkMode ? icon.classList.add('hidden') : icon.classList.remove('hidden'));
+          darkIcons.forEach(icon => isDarkMode ? icon.classList.remove('hidden') : icon.classList.add('hidden'));
+      }
+
+      // Set initial state based on what's in localStorage or system preference
+      const isInitialDark = document.documentElement.classList.contains('dark');
+      updateIcons(isInitialDark);
+
+      themeToggleBtns.forEach(themeToggleBtn => {
+        themeToggleBtn.addEventListener('click', function() {
+          // toggle icons
+          const isDark = document.documentElement.classList.toggle('dark');
+          
+          // update localStorage
+          if (isDark) {
+            localStorage.setItem('color-theme', 'dark');
+          } else {
+            localStorage.setItem('color-theme', 'light');
+          }
+          
+          // update all icons
+          updateIcons(isDark);
+        });
+      });
+    </script>
+  <script type="module" src="/index.tsx"></script>
+</body>
+</html>
